@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Request Verification Code</title>
+    <h1>Login</h1>
+    {% if error %}
+        <p class=error>
+            <strong>Error:</strong> {{ error }}
+        </p>
+    {% endif %}
+</head>
+<body>
+<form method="POST">
+    <div class="field">
+        <label for="username" class="label">Username</label>
+        <input class="input" type="text" id="username" name="username" placeholder="Username">
+    </div>
+    <div class="field">
+        <p class="control">
+            <button type="submit" class="button is-success">
+                Request verification code
+            </button>
+        </p>
+    </div>
+</form>
+</body>
+</html>

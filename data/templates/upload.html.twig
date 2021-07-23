@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Upload an Image to the AWS S3 Bucket</title>
+</head>
+<body>
+<h1 class="title">
+    Please upload an image in .jpg, .jpeg, or .png format
+</h1>
+{% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+<form action="/upload" method="POST" enctype="multipart/form-data">
+    <label for="name">File</label>
+    <input id="name" type="file" name="file" />
+    <br>
+    <br>
+    <input type=submit value=Upload>
+</form>
+</body>
+</html>

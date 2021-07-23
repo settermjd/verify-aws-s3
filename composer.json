@@ -1,0 +1,12 @@
+{
+    "require": {
+        "slim/slim": "^4.8",
+        "slim/twig-view": "^3.2",
+        "slim/psr7": "^1.4",
+        "php-di/php-di": "^6.3",
+        "vlucas/phpdotenv": "^5.3",
+        "twilio/sdk": "^6.27",
+        "aws/aws-sdk-php": "^3.185",
+        "league/flysystem-aws-s3-v3": "^2.1"
+    }
+}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Verify Your Account</title>
+</head>
+<body>
+<h1 class="title">
+    Please verify your account {{ username }}
+</h1>
+{% if error %}
+<p class=error><strong>Error:</strong> {{ error }}
+{% endif %}
+<form method="POST">
+    <div class="field">
+        <label for="verificationcode" class="label">Enter the code sent to your phone number.</label>
+        <input class="input" type="password" id="verificationcode" name="verificationcode" placeholder="verification code">
+    </div>
+    <div class="field">
+        <p class="control">
+            <button type="submit" class="is-success" value="submitcode">
+                Submit Verification Code
+            </button>
+        </p>
+    </div>
+</form>
+</body>
+</html>
