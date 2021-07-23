@@ -14,12 +14,16 @@
 {% endif %}
 <form method="POST">
     <div class="field">
-        <label for="verificationcode" class="label">Enter the code sent to your phone number.</label>
-        <input class="input" type="password" id="verificationcode" name="verificationcode" placeholder="verification code">
+        <label for="verification_code" class="label">Enter the code sent to your phone.</label>
+        <input class="input"
+               type="password"
+               id="verification_code"
+               name="verification_code"
+               placeholder="verification code">
     </div>
     <div class="field">
         <p class="control">
-            <button type="submit" class="is-success" value="submitcode">
+            <button type="submit" class="is-success">
                 Submit Verification Code
             </button>
         </p>
