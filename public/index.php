@@ -80,9 +80,11 @@ $app->map(['GET', 'POST'], '/', function (Request $request, Response $response, 
     }
 
     return $view->render($response, $template);
-
 });
 
+/**
+ * The route to verify the verification code sent from Twilio Verify
+ */
 $app->map(['GET', 'POST'], '/verify', function (Request $request, Response $response, array $args) {
     $username = $_SESSION['username'];
     $phoneNumber = $this->get('known_participants')[$username];
@@ -110,6 +112,9 @@ $app->map(['GET', 'POST'], '/verify', function (Request $request, Response $resp
     return $view->render($response, $template);
 });
 
+/**
+ * The route for uploading an image to the S3 bucket.
+ */
 $app->map(['GET', 'POST'], '/upload', function (Request $request, Response $response, array $args) {
     $templateFile = 'upload.html.twig';
     $view = $this->get('view');
@@ -131,6 +136,8 @@ $app->map(['GET', 'POST'], '/upload', function (Request $request, Response $resp
             $file->moveTo($this->get('config')['uploadDir'] . $file->getClientFilename());
         }
 
+        /* Handle file upload errors */
+
         try {
             $this->get('s3Client')
                 ->writeStream(
@@ -148,8 +155,12 @@ $app->map(['GET', 'POST'], '/upload', function (Request $request, Response $resp
     return $view->render($response, $templateFile);
 });
 
+/**
+ * The route for when the user has successfully uploaded an image to the S3 bucket
+ */
 $app->get('/success', function (Request $request, Response $response, array $args) {
     return $this->get('view')->render($response, 'success.html.twig');
 });
 
+// Boot the application
 $app->run();
