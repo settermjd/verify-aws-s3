@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Upload an Image to the AWS S3 Bucket</title>
+    <link href="/css/styles.css" rel="stylesheet">
+</head>
+<body>
+<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+        <div class="mt-8 space-y-6">
+            <h1 class="title">
+                Please Upload an Image
+            </h1>
+        </div>
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <div class="rounded-md shadow-sm">
+                <div class="mb-4">
+                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                        <div class="space-y-1 text-center">
+                    <label for="name" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">File</label>
+                    <input id="name"
+                           type="file"
+                           name="file"
+                           class="sr-only" />
+                    {% if error %}<p class="error text-red-700">{{ error }}</p>{% endif %}
+                    <p class="text-xs text-gray-500">
+                        Allowed file formats: <span class="font-bold">PNG</span> (.png) and <span class="font-bold">JPG</span> (.jpg and .jpeg)
+                    </p>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn">
+                    Upload Image
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Request Verification Code</title>
+    <link href="/css/styles.css" rel="stylesheet">
+</head>
+<body>
+<div class="min-h-screen flex items-center justify-center bg-gray-50 py-4 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+        <div class="mt-8 space-y-6">
+            <h1>Request Verification Code</h1>
+        </div>
+        <form method="POST">
+            <input type="hidden" name="remember" value="true">
+            <div class="rounded-md shadow-sm">
+                <div class="mb-4">
+                    <label for="username" class="sr-only">Username</label>
+                    <input type="text"
+                           {% if error %}class="input-field-with-error"{% else %}class="input-field"{% endif %}
+                           id="username"
+                           name="username"
+                           placeholder="Username">
+                    {% if error %}<p class="error text-red-700">{{ error }}</p>{% endif %}
+                </div>
+                <button type="submit" class="btn">
+                    Request verification code
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

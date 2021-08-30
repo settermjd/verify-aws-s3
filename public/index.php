@@ -1,13 +1,14 @@
 <?php
+declare(strict_types=1);
 
 use DI\Container;
-use League\Flysystem\FilesystemException;
-use League\Flysystem\UnableToWriteFile;
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use League\Flysystem\{FilesystemException,UnableToWriteFile};
+use Psr\Http\Message\{
+    ResponseInterface as Response,
+    ServerRequestInterface as Request
+};
 use Slim\Factory\AppFactory;
-use Slim\Views\Twig;
-use Slim\Views\TwigMiddleware;
+use Slim\Views\{Twig,TwigMiddleware};
 use Twilio\Rest\Client;
 
 require __DIR__ . '/../vendor/autoload.php';
@@ -18,20 +19,15 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
 $container = new Container();
-AppFactory::setContainer($container);
 
-$container->set('known_participants', fn() => json_decode(
-    file_get_contents(__DIR__ . '/../data/known_participants.json'),
-    TRUE
-));
-$container->set('view', fn() => Twig::create(__DIR__ . '/../data/templates'));
-$container->set('twilioClient', fn() => new Client($_ENV['TWILIO_ACCOUNT_SID'], $_ENV['TWILIO_AUTH_TOKEN']));
-$container->set('allowedFileExtensions', ['jpg', 'jpeg', 'png']);
 $container->set('config', [
     'allowedFileExtensions' => ['jpg', 'jpeg', 'png'],
     'uploadDir' => __DIR__ . '/../data/uploads/'
 ]);
-
+$container->set('known_participants', fn() => json_decode(
+    file_get_contents(__DIR__ . '/../data/known_participants.json'),
+    TRUE
+));
 $container->set('s3Client', function () {
     $client = new Aws\S3\S3Client([
         'credentials' => [
@@ -41,21 +37,23 @@ $container->set('s3Client', function () {
         'region' => 'eu-central-1',
         'version' => 'latest',
     ]);
-    // The internal adapter
     $adapter = new League\Flysystem\AwsS3V3\AwsS3V3Adapter(
-        $client,                                // S3Client
-        'settermjd-lats-image-data',     // Bucket name
+        $client,                                // The S3Client object
+        'settermjd-lats-image-data',     // The S3 bucket name
     );
 
-    // The FilesystemOperator
     return new League\Flysystem\Filesystem($adapter);
 });
+$container->set('twilioClient', fn() => new Client($_ENV['TWILIO_ACCOUNT_SID'], $_ENV['TWILIO_AUTH_TOKEN']));
+$container->set('view', fn() => Twig::create(__DIR__ . '/../resources/templates'));
+AppFactory::setContainer($container);
 
 $app = AppFactory::create();
-
-// Add Twig-View Middleware
 $app->add(TwigMiddleware::createFromContainer($app));
 
+/**
+ * The route to request a verification code be sent to the user's mobile phone
+ */
 $app->map(['GET', 'POST'], '/', function (Request $request, Response $response, array $args) {
     $view = $this->get('view');
     $template = 'index.html.twig';
