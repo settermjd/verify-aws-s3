@@ -1,5 +1,7 @@
-vendor/
+..02:28vendor0
 data/cache/
 data/uploads/
 .idea/
+vendor/
 node_modules/
+.env*
