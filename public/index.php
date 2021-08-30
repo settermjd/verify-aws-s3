@@ -93,8 +93,15 @@ $app->map(['GET', 'POST'], '/verify', function (Request $request, Response $resp
 
     if ($request->getMethod() === 'POST') {
         $verificationCode = $request->getParsedBody()['verification_code'];
-        $twilioClient = $this->get('twilioClient');
+        if ($verificationCode === '') {
+            return $view->render(
+                $response,
+                $template,
+                ['error' => 'Please enter the verification code.']
+            );
+        }
 
+        $twilioClient = $this->get('twilioClient');
         $verification = $twilioClient
             ->verify
             ->v2
@@ -124,10 +131,9 @@ $app->map(['GET', 'POST'], '/upload', function (Request $request, Response $resp
 
         $hasValidExtension = in_array(
             pathinfo($file->getClientFilename(), PATHINFO_EXTENSION),
-            $this->get('allowedFileExtensions'),
+            $this->get('config')['allowedFileExtensions'],
             true
         );
-
         if (! $hasValidExtension) {
             return $view->render($response, $templateFile, ['error' => 'Please upload a Jpeg or a PNG file.']);
         }
