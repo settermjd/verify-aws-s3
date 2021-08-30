@@ -1,10 +1,10 @@
-# Verify Uploads to an Amazon S3 Bucket with SlimPHP using Twilio Verify
+## Verify Uploads to an Amazon S3 Bucket with SlimPHP using Twilio Verify
 
-## About
+### About
 
 This project is a small codebase that supports a tutorial which I wrote for the Twilio blog. The tutorial shows how to, albeit simplistically, verify image uploads to an Amazon S3 bucket using SlimPHP and Twilio Verify. It is not intended to be an example of best practices, rather to exemplify one specific approach. Check out the article to get the full story.
 
-## Getting Started
+### Getting Started
 
 To get started using the project, first clone the project locally, then change into the newly created project directory and install the project's dependencies. You can do all of this by running the commands below.
 
